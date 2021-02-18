@@ -4,7 +4,7 @@
 int menu()
 {
 	int choix;
-// au programme du TP7 :
+// au programme du TP6 :
 printf("\n\n 1 - ajouter un nouveau livre dans la bibliotheque "); 
 printf("\n 2 - afficher tous les livres de la bibliotheque "); 
 printf("\n 3 - rechercher un livre (par son titre)");  // il peut y avoir plusieurs livres de même titre. Dans ce cas, indiquez le nombre d'exemplaires disponibles
@@ -13,15 +13,13 @@ printf("\n 5 - supprimer un livre de la bibliotheque");
 // si les 5 choix ci dessus sont bien codés, modifiez votre structure T_Livre et passez à 5 champs (avec cote,editeur et annee)
 
 
-// au programme du TP8 :
+// au programme du TP7 :
 // ajouter le champ emprunteur à votre structure T_Livre
-/*
-printf("\n 6 - emprunter un livre de la bibliotheque");
+/*printf("\n 6 - emprunter un livre de la bibliotheque");
 printf("\n 7 - restituer/rendre un livre de la bibliotheque");
 printf("\n 8 - trier les livres (par titre)");
 printf("\n 9 - trier les livres (par auteur)");
-printf("\n 10 - trier les livres (par annee)");
-*/
+printf("\n 10 - trier les livres (par annee)");*/
 // si les 5 choix (6-10) sont bien codés, changez le type T_Emp et remplacez-le par la structure T_Emp visible dans livre.h
 // vous pourrez alors faire les menus 11,12,etc...
 // printf("\n 11- lister les livres disponibles "); 
@@ -43,6 +41,7 @@ int main()
 int reponse,chx;
 T_Bibliotheque B; 
 init( &B );
+chargement(&B);
 
 do
 {
@@ -55,13 +54,37 @@ switch(chx)
 					else
 					printf("impossible d ajouter (bibliotheque pleine)");
 			break;
-	case 2 : reponse=afficherBibliotheque(&B);
+	case 2 : reponse = afficherBibliotheque(&B);
 			if (reponse==0)	
 					printf("La bibliotheque est vide");
 
 			break;	
+	case 3 : reponse = rechercherLivre(&B);
+			if (reponse==0)
+				printf("\nIl n'existe pas de livre avec ce titre.");
+			else
+				printf("\n Il existe %d livre(s) avec ce titre.",reponse);
+				
 	
+			break;
+	case 4 : reponse = rechercherAfficherLivre(&B);
+				if (reponse==0)
+					printf("Il n'existe pas de livre de cet auteur");
+				else 
+					printf("Il existe %d livre(s) de cet auteur:",reponse);
+				break;
+	case 5 : reponse = supprimerLivre(&B);
+				if (reponse==0)
+					printf("impossible de supprimer (la bibliothèque est vide)");
+				else
+					printf("Le livre a bien été supprimé");
+				break;
 	
+	case 6 : reponse = emprunterLivre(&B);
+			if(reponse==0)
+				printf("Ce livre n'est pas disponible");
+			else
+				printf("Vous pouvez emprunter ce livre");			
 	
 	
 	
@@ -69,7 +92,7 @@ switch(chx)
 
 }while(chx!=0);
 
-
+sauvegarde(&B);
 
 
 
